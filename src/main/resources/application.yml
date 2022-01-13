@@ -1,0 +1,47 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /crm
+spring:
+  datasource:
+    type: com.mchange.v2.c3p0.ComboPooledDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/crm?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+  freemarker:
+    suffix: .ftl
+    cache: false
+    template-loader-path: classpath:/views/
+    content-type: text/html
+  devtools:
+    restart:
+      enabled: true
+      # 设置重启的目录，添加目录的文件需要restart
+      additional-paths: src/main/java
+      # 解决项目自动重新编译后接口报404的问题
+      poll-interval: 3000
+      quiet-period: 1000
+    ## Ehcache缓存配置
+  cache:
+    ehcache:
+      config: classpath:ehcache.xml
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mappers/*.xml
+  type-aliases-package: com.yjxxt.bean;com.yjxxt.query;com.yjxxt.vo;com.yjxxt.dto;
+pagehelper:
+  helper-dialect: mysql
+logging:
+  level:
+    com:
+      yjxxt:
+        mapper: debug
+
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger- %msg%n"
+    level: debug
+  file:
+    path: "."
+    name: "springboot.log"
